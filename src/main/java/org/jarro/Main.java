@@ -1,17 +1,32 @@
 package org.jarro;
 
+import lombok.extern.slf4j.Slf4j;
+import net.dv8tion.jda.api.JDABuilder;
+import net.dv8tion.jda.api.entities.Activity;
+import net.dv8tion.jda.api.requests.GatewayIntent;
+import org.jarro.config.BotConfig;
+import org.jarro.listener.MessageListener;
+import org.jarro.listener.ReadyListener;
+
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
+@Slf4j
 public class Main {
-    public static void main(String[] args) {
-        //TIP Press <shortcut actionId="ShowIntentionActions"/> with your caret at the highlighted text
-        // to see how IntelliJ IDEA suggests fixing it.
-        System.out.printf("Hello and welcome!");
 
-        for (int i = 1; i <= 5; i++) {
-            //TIP Press <shortcut actionId="Debug"/> to start debugging your code. We have set one <icon src="AllIcons.Debugger.Db_set_breakpoint"/> breakpoint
-            // for you, but you can always add more by pressing <shortcut actionId="ToggleLineBreakpoint"/>.
-            System.out.println("i = " + i);
+    public static void main(String[] args) {
+        // Load configuration
+        BotConfig botConfig = new BotConfig();
+        final String token = botConfig.getToken();
+
+        try {
+            // Build JDA instance with listeners
+            JDABuilder.createDefault(token)
+                    .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
+                    .setActivity(Activity.playing("Terraria"))
+                    .addEventListeners(new ReadyListener(), new MessageListener())
+                    .build();
+        } catch (Exception e) {
+            log.error("Failed to initialize JDA", e);
         }
     }
 }
