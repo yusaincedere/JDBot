@@ -19,10 +19,9 @@ public class Main {
         final String token = botConfig.getToken();
 
         try {
-            // Build JDA instance with listeners
             JDABuilder.createDefault(token)
                     .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
-                    .setActivity(Activity.playing("Terraria"))
+                    .setActivity(Activity.playing("MineCraft"))
                     .addEventListeners(new ReadyListener(), new MessageListener())
                     .build();
         } catch (Exception e) {
