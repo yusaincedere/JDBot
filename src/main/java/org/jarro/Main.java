@@ -21,7 +21,7 @@ public class Main {
         try {
             JDABuilder.createDefault(token)
                     .enableIntents(GatewayIntent.GUILD_MESSAGES, GatewayIntent.MESSAGE_CONTENT)
-                    .setActivity(Activity.playing("MineCraft"))
+                    .setActivity(Activity.playing("Minecraft"))
                     .addEventListeners(new ReadyListener(), new MessageListener())
                     .build();
         } catch (Exception e) {
